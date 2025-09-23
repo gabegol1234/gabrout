@@ -1,0 +1,7 @@
+body {
+    #divCanvasJogo {
+        width: fit-content;
+        height: fit-content;
+        border: 1px solid black;
+    }
+}
