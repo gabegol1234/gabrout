@@ -5,7 +5,7 @@ $().ready(function () { // executa o codigo quando o HTML estiver totalmente car
     var ultimaColisao = false;
     var pontuacao = 0;
     var gameOver = false;
-    var snake = [];
+    var tijolos = [];
     var inicioGame=false;
 
     // Controle de tempo para velocidade da cobra
@@ -46,7 +46,18 @@ $().ready(function () { // executa o codigo quando o HTML estiver totalmente car
             ctx.closePath(); 
         }
     }
-   
+     function tijolo(x,y,l,a){
+        return{
+            "x":x,
+            "y":y,
+            "l":l,
+            "a":a,
+            "verdadeiro":true
+        }
+      
+
+        
+     }
      // verifica se o o1 e o2 se sobrepoe faz o aumento das pontuações e add um novo quadrado no final da cobra
     function detectaColisao(o1, o2) {
         var top1 = o1.y;
@@ -93,9 +104,15 @@ $().ready(function () { // executa o codigo quando o HTML estiver totalmente car
         apagarTela();
 
         // Atualiza posição dos segmentos (do fim até o primeiro)
-
-        bola.atualiza();
+        for(var i = 0; i <40; i++){
+            ctx.fillRect(tijolos[i].x,tijolos[i].y,tijolos[i].l,tijolos[i].a)
+         }
+        
         base.atualiza();
+        if(inicioGame==false){
+            bola.x=base.x+50;
+        }//
+        bola.atualiza();
 
         detectaLimite(base);
         //verificaAutoColisao();
@@ -154,23 +171,31 @@ $().ready(function () { // executa o codigo quando o HTML estiver totalmente car
     //snake.push(criaItemSnake());
 
   //  requestAnimationFrame(desenharTela);
-    
+    var xx=10;
+    var yy=10;
+    var ll=50;
+    var aa=10;
+     for(var i = 0; i <40; i++){
+        if(xx+ll>=canvas.width){
+            yy=yy+20;
+            xx=10;
+        }
+        tijolos.push(tijolo(xx,yy,ll,aa));
+        xx=xx+ll+10;
+     }
     //chamando inicio do jogo
     desenharTela();
+
 
     $(window).keydown(function (event) {// detecta telcas precionadas
         // Evita inverter a direção instantaneamente
         if (event.which == 37) {  // esquerda
-            if(inicioGame==false){
-                bola.vx=-5;
-            }
+            
             base.vx = -5;
             //snake[0].vy = 0;
         }
         if (event.which == 39) { 
-            if(inicioGame==false){
-                bola.vx=5;
-            }// direita
+           
             base.vx = 5;
             //snake[0].vy = 0;
         }
